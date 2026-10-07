@@ -1,0 +1,20 @@
+---
+import { site, links } from '../data/site';
+---
+<footer class="footer">
+  <div class="container row">
+    <span>© {new Date().getFullYear()} {site.name} · <span class="ta" lang="ta">{site.nameTamil}</span></span>
+    <span class="links">
+      <a href={links.writings} rel="noopener">myezhuthu.link</a>
+      <a href={links.pattimanram} rel="noopener">thenpk.org</a>
+      <a href={links.studios} rel="noopener">thejstudios.com</a>
+    </span>
+  </div>
+</footer>
+<style>
+  .footer { border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 32px; padding-bottom: 32px; }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; }
+  .links a { text-decoration: none; }
+  .links a:hover { color: var(--accent-text); }
+</style>

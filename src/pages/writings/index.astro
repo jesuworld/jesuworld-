@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { links } from '../../data/site';
+
+const posts = (await getCollection('writings', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const hasEnglish = posts.some((p) => p.data.lang === 'en');
+---
+<Base title="Writings — Jesu Sundaramaran" description="Tamil short stories and poems by Jesu Sundaramaran, with English writing to come.">
+  <Header />
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Writings</p>
+        <h1 class="h2 big">Stories, poems &amp; essays</h1>
+        <p class="muted lead">Short fiction and poetry in Tamil, exploring family, memory and life between two homes.{!hasEnglish && ' English pieces and translations are coming soon.'}</p>
+
+        <div class="filters" role="group" aria-label="Language">
+          <button type="button" data-lang="all" aria-pressed="true">All</button>
+          <button type="button" data-lang="ta" aria-pressed="false">Tamil</button>
+          <button type="button" data-lang="en" aria-pressed="false">English</button>
+        </div>
+
+        <ul class="list" id="writing-list">
+          {posts.map((p) => (
+            <li data-lang={p.data.lang}>
+              <a href={p.data.url ?? `/writings/${p.id}`} rel={p.data.url ? 'noopener' : undefined}>
+                <span class="date muted">{fmt(p.data.date)}</span>
+                <span class="main">
+                  <span class:list={['title', { 'ta-serif': p.data.lang === 'ta' }]} lang={p.data.lang}>{p.data.title}</span>
+                  {p.data.transliteration && <span class="muted translit">{p.data.transliteration}</span>}
+                  <span class="muted summary">{p.data.summary}</span>
+                </span>
+                <span class="tag">{p.data.category}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="empty muted" id="empty" hidden>Nothing here yet — English writing is on its way.</p>
+        <p class="muted archive">Full archive at <a class="text-link" href={links.writings} rel="noopener">myezhuthu.link</a></p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .big { font-size: clamp(36px, 5vw, 60px); }
+  .lead { max-width: 640px; margin: 18px 0 36px; font-size: 19px; }
+  .filters { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); margin-bottom: 32px; }
+  .filters button { min-height: 44px; padding: 0 22px; border-radius: 999px; border: 0; background: transparent; color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
+  .filters button[aria-pressed='true'] { background: var(--btn-bg); color: var(--btn-fg); }
+  .list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .list li { border-bottom: 1px solid var(--line); }
+  .list li[hidden] { display: none; }
+  .list a { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 28px; padding: 24px 4px; text-decoration: none; }
+  .list a:hover .title { color: var(--accent-text); }
+  .date { flex: 0 0 100px; font-size: 15px; }
+  .main { flex: 1 1 320px; display: flex; flex-direction: column; }
+  .title { font-weight: 700; font-size: 22px; line-height: 1.4; }
+  .ta-serif { font-weight: 600; }
+  .translit { font-size: 14px; }
+  .summary { font-size: 15px; margin-top: 4px; }
+  .tag { font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+  .empty { padding: 24px 0; }
+  .archive { margin-top: 32px; }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+  const items = document.querySelectorAll<HTMLLIElement>('#writing-list li');
+  const empty = document.getElementById('empty')!;
+  buttons.forEach((btn) => btn.addEventListener('click', () => {
+    const lang = btn.dataset.lang;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    let shown = 0;
+    items.forEach((li) => { const hide = lang !== 'all' && li.dataset.lang !== lang; li.hidden = hide; if (!hide) shown++; });
+    empty.hidden = shown > 0;
+  }));
+</script>

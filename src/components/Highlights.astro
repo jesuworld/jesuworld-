@@ -1,0 +1,24 @@
+---
+import { highlights } from '../data/site';
+---
+<section aria-label="Highlights" class="container stats">
+  {highlights.map((h) => (
+    <div class="card stat">
+      <p class="num">{h.value}<span>{h.suffix}</span></p>
+      <p class="muted label">{h.label}</p>
+    </div>
+  ))}
+</section>
+<style>
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding-bottom: 96px; }
+  .stat { padding: 28px; border-radius: 18px; }
+  .num { margin: 0; font-weight: 800; font-size: 44px; line-height: 1; }
+  .num span { color: var(--accent-text); }
+  .label { margin: 8px 0 0; }
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-bottom: 48px; }
+    .stat { padding: 18px; }
+    .num { font-size: 32px; }
+    .label { font-size: 13px; }
+  }
+</style>
