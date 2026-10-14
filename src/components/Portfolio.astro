@@ -3,7 +3,7 @@ import Icon from './Icon.astro';
 import { works as baseWorks } from '../data/site';
 import { publishedBooks as books, series } from '../data/books';
 const works = [
-  ...books.map((b) => ({ cat: 'Books' as const, title: b.title, sub: `${series.name} · Book ${b.number}`, href: `/books#book-${b.number}`, image: b.cover || undefined, youtubeId: undefined as string | undefined })),
+  ...books.map((b) => ({ cat: 'Books' as const, title: b.title, sub: `${series.name} · Book ${b.number}${b.comingSoon ? ' · Coming soon' : ''}`, href: `/books#book-${b.number}`, image: b.cover || undefined, youtubeId: undefined as string | undefined })),
   ...baseWorks,
 ];
 const icons: Record<string, string> = { Books: 'book', Writing: 'pen', Pattimanram: 'mic', Film: 'film', Community: 'people' };

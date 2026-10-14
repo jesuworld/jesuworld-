@@ -3,10 +3,10 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BookCover from '../components/BookCover.astro';
-import { series, publishedBooks } from '../data/books';
+import { series, publishedBooks, availableBooks, plain } from '../data/books';
 
-const title = `${series.name} series — Books by ${series.author}`;
-const description = series.description || `${series.name} (${series.nameTamil}), ${series.tagline.toLowerCase()} by ${series.author}. Available on Amazon.`;
+const title = `${series.name} — Books by ${series.author}`;
+const description = `${series.hook} ${series.name} (${series.nameTamil}), ${series.tagline.toLowerCase()} by ${series.author}.`;
 
 // Structured data so search engines understand the series and its books.
 const jsonLd = {
@@ -14,12 +14,13 @@ const jsonLd = {
   '@type': 'BookSeries',
   name: series.name,
   author: { '@type': 'Person', name: series.author, alternateName: 'Jesu Sundaramaran', url: 'https://www.jesuworld.com' },
-  hasPart: publishedBooks.map((b) => ({
+  hasPart: availableBooks.map((b) => ({
     '@type': 'Book',
     name: b.title,
     position: b.number,
     inLanguage: 'en',
-    ...(b.description ? { description: b.description.split('\n\n')[0] } : {}),
+    ...(b.description ? { description: plain(b.description).slice(0, 500) } : {}),
+    ...(b.subtitle ? { alternativeHeadline: b.subtitle } : {}),
     ...(b.cover ? { image: new URL(b.cover, 'https://www.jesuworld.com').href } : {}),
     url: b.links[0]?.href,
   })),
@@ -35,14 +36,14 @@ const jsonLd = {
           <p class="eyebrow">Books · {series.tagline}</p>
           <h1>{series.name}</h1>
           <p class="ta tamil" lang="ta">{series.nameTamil}</p>
-          {series.description && <p class="muted lead">{series.description}</p>}
+          {series.hook && <p class="hook">{series.hook}</p>}
           <p class="by">By <strong>{series.author}</strong></p>
           <div class="ctas">
             <a href={series.amazonAuthor} class="btn btn--primary" rel="noopener">Get the series on Amazon ↗</a>
-            {publishedBooks.length > 0 && <a href={`#book-${publishedBooks[0].number}`} class="btn btn--ghost">Start with Book {publishedBooks[0].number}</a>}
+            {availableBooks.length > 0 && <a href={`#book-${availableBooks[0].number}`} class="btn btn--ghost">Start with Book {availableBooks[0].number}</a>}
           </div>
         </div>
-        {publishedBooks.length > 0 && (
+        {publishedBooks.length > 0 && publishedBooks.every((b) => b.cover) && (
           <div class="stack" aria-hidden="true">
             {publishedBooks.slice(0, 5).map((b, i) => (
               <div class="stack__item" style={`--i:${i}; --n:${Math.min(publishedBooks.length, 5)}`}><BookCover book={b} eager /></div>
@@ -51,6 +52,18 @@ const jsonLd = {
         )}
       </div>
     </section>
+
+    {series.description && (
+      <section class="section section--alt about">
+        <div class="container about__inner">
+          <div>
+            <p class="eyebrow">About the series</p>
+            <h2 class="about__title">Chumma Iru means <em>“Just Be”</em></h2>
+          </div>
+          <div class="prose" set:html={series.description} />
+        </div>
+      </section>
+    )}
 
     {publishedBooks.length > 0 ? (
       <section class="section list-section">
@@ -63,11 +76,14 @@ const jsonLd = {
               <li id={`book-${b.number}`} class="book">
                 <div class="book__cover"><BookCover book={b} /></div>
                 <div class="book__body">
-                  <p class="num">Book {b.number} of 5</p>
+                  <p class="num">Book {b.number} of 5{b.comingSoon && <span class="soon">Coming soon</span>}</p>
+                  <p class="series-line">Lessons from Chumma Iru</p>
                   <h2>{b.title}</h2>
                   {b.subtitle && <p class="subtitle muted">{b.subtitle}</p>}
                   {(b.published || b.pages) && <p class="meta">{[b.published, b.pages].filter(Boolean).join(' · ')}</p>}
-                  {b.description && b.description.split('\n\n').map((para) => <p class="desc">{para}</p>)}
+                  {b.hook && <p class="book-hook">{b.hook}</p>}
+                  {b.description && <div class="prose desc" set:html={b.description} />}
+                  {b.comingSoon && <p class="muted soon-note">Kindle and paperback editions are on the way. Meanwhile, start the series with Book 1.</p>}
                   <div class="buy">
                     {b.links.filter((l) => l.href.trim()).map((l, i) => (
                       <a href={l.href} class:list={['btn', i === 0 ? 'btn--primary' : 'btn--ghost']} rel="noopener">
@@ -85,7 +101,7 @@ const jsonLd = {
       <section class="section">
         <div class="container">
           <div class="card waiting">
-            <p class="big">All five books are on Amazon</p>
+            <p class="big">The series is on Amazon</p>
             <p class="muted">Browse the complete {series.name} series on the author page.</p>
             <a href={series.amazonAuthor} class="btn btn--primary" rel="noopener">Open the Amazon author page ↗</a>
           </div>
@@ -114,9 +130,9 @@ const jsonLd = {
   .intro { border-bottom: 1px solid var(--line); overflow: hidden; }
   .intro__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 56px; padding-top: 88px; padding-bottom: 88px; }
   .intro__text { flex: 1 1 480px; min-width: 0; }
-  h1 { margin: 0; font-weight: 800; font-size: clamp(48px, 7vw, 88px); line-height: 1; letter-spacing: -0.02em; }
+  h1 { margin: 0; font-weight: 800; font-size: clamp(44px, 6vw, 76px); line-height: 1.02; letter-spacing: -0.02em; }
   .tamil { margin: 10px 0 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 600; color: var(--accent-text); }
-  .lead { margin: 24px 0 0; max-width: 560px; font-size: 19px; }
+  .hook { margin: 24px 0 0; max-width: 520px; font-size: 22px; font-weight: 600; line-height: 1.45; }
   .by { margin: 20px 0 0; }
   .ctas { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px; }
   .stack { flex: 1 1 420px; min-width: 0; position: relative; height: 420px; max-width: 520px; }
@@ -131,11 +147,27 @@ const jsonLd = {
   .books { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
   .book { display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: 56px; align-items: start; padding: 56px 0; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
   .book:first-child { border-top: 0; padding-top: 0; }
+  .book__cover { position: sticky; top: 24px; }
   .num { margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+  .soon { margin-left: 10px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--text); letter-spacing: 0.06em; }
+  .series-line { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: var(--muted); }
+  .soon-note { margin: 18px 0 0; }
   h2 { margin: 0; font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -0.01em; }
   .subtitle { margin: 8px 0 0; font-size: 19px; }
   .meta { margin: 14px 0 0; font-size: 14px; font-weight: 600; color: var(--muted); }
-  .desc { margin: 18px 0 0; max-width: 680px; font-size: 18px; line-height: 1.75; }
+  .book-hook { margin: 22px 0 0; max-width: 680px; font-size: 21px; font-weight: 700; line-height: 1.45; color: var(--accent-text); }
+  .desc { margin-top: 8px; max-width: 680px; }
+  .prose { font-size: 17px; line-height: 1.75; color: var(--text); }
+  .prose :global(p) { margin: 14px 0 0; }
+  .prose :global(p:first-child) { margin-top: 0; }
+  .desc :global(p:first-child) { margin-top: 14px; }
+  .prose :global(b) { font-weight: 700; }
+  .prose :global(ul) { margin: 10px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .prose :global(li) { position: relative; padding-left: 22px; }
+  .prose :global(li)::before { content: ''; position: absolute; left: 4px; top: 0.7em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .about__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 56px; align-items: start; }
+  .about__title { margin: 0; font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.2; }
+  .about__title em { font-style: normal; color: var(--accent-text); }
   .buy { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
 
   .waiting { padding: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border-left: 4px solid var(--accent); }
@@ -154,8 +186,10 @@ const jsonLd = {
     .jump { flex-wrap: nowrap; overflow-x: auto; margin: 0 -18px 36px; padding: 0 18px 6px; }
     .jump a { flex: 0 0 auto; }
     .book { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
-    .book__cover { max-width: 220px; }
-    .desc { font-size: 17px; }
+    .book__cover { max-width: 220px; position: static; }
+    .prose { font-size: 16px; }
+    .book-hook { font-size: 19px; }
+    .about__inner { grid-template-columns: 1fr; gap: 20px; }
     .buy { flex-direction: column; }
     .waiting { padding: 24px; }
   }

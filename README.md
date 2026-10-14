@@ -53,6 +53,19 @@ Your text here (only used when `url` is not set; then it is published at /writin
 The three newest writings appear on the home page automatically; all of them are on `/writings`,
 with a Tamil / English filter.
 
+## Books — the Chumma Iru series
+
+The permanent page is **jesuworld.com/books**. Everything comes from **`src/data/books.ts`**:
+
+- `series.description` — your 2–3 sentence introduction to the series.
+- One entry per book (1–5): `title`, `subtitle`, `description` (blank line between paragraphs),
+  `published`, `pages`, and `links` — e.g.
+  `links: [{ label: 'Kindle', href: 'https://www.amazon.com/dp/…' }, { label: 'Paperback', href: 'https://www.amazon.com/dp/…' }]`
+- Covers: upload to `public/images/books/` (e.g. `chumma-iru-1.jpg`) and set `cover: '/images/books/chumma-iru-1.jpg'`.
+
+A book only appears once it has a title **and** an Amazon link, so the page never shows empty slots.
+The home page shelf, the portfolio "Books" filter and Google's structured data update automatically.
+
 ## Deploy to Vercel
 
 1. Create a new repository on [GitHub](https://github.com/new) (e.g. `jesuworld`) and push this folder:

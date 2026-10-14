@@ -1,14 +1,14 @@
 ---
 import BookCover from './BookCover.astro';
-import { series, publishedBooks } from '../data/books';
+import { series, publishedBooks, availableBooks } from '../data/books';
 ---
 <section id="books" class="section">
   <div class="container">
     <div class="section-head section-head--split">
       <div>
         <p class="eyebrow">Books · English</p>
-        <h2 class="h2">The {series.name} series <span class="ta tamil" lang="ta">{series.nameTamil}</span></h2>
-        <p class="muted sub">{series.tagline}{publishedBooks.length > 0 && publishedBooks.length < 5 ? ` · ${publishedBooks.length} available now` : ''}</p>
+        <h2 class="h2">{series.name} <span class="ta tamil" lang="ta">{series.nameTamil}</span></h2>
+        <p class="muted sub">{series.hook}{availableBooks.length > 0 && availableBooks.length < 5 ? ` · ${availableBooks.length} available now on Amazon` : ''}</p>
       </div>
       <a href="/books" class="btn btn--primary">Explore the series</a>
     </div>
@@ -19,7 +19,7 @@ import { series, publishedBooks } from '../data/books';
           <li>
             <a href={`/books#book-${b.number}`} class="item">
               <BookCover book={b} />
-              <span class="num">Book {b.number}</span>
+              <span class="num">Book {b.number}{b.comingSoon && ' · Coming soon'}</span>
               <span class="title">{b.title}</span>
             </a>
           </li>
@@ -27,7 +27,7 @@ import { series, publishedBooks } from '../data/books';
       </ul>
     ) : (
       <div class="card empty">
-        <p class="muted">All five books are available on Amazon under the name {series.author}.</p>
+        <p class="muted">Available on Amazon under the name {series.author}.</p>
         <a href={series.amazonAuthor} class="btn btn--ghost" rel="noopener">See them on Amazon ↗</a>
       </div>
     )}
