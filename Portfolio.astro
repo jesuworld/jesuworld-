@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { works as baseWorks } from '../data/site';
+import { publishedBooks as books, series } from '../data/books';
+const works = [
+  ...books.map((b) => ({ cat: 'Books' as const, title: b.title, sub: `${series.name} · Book ${b.number}${b.comingSoon ? ' · Coming soon' : ''}`, href: `/books#book-${b.number}`, image: b.cover || undefined, youtubeId: undefined as string | undefined })),
+  ...baseWorks,
+];
+const icons: Record<string, string> = { Books: 'book', Writing: 'pen', Pattimanram: 'mic', Film: 'film', Community: 'people' };
+const filters = ['All', ...(books.length ? ['Books'] : []), 'Writing', 'Pattimanram', 'Film', 'Community'];
+const yt = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+<section id="portfolio" class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">Portfolio</p>
+      <h2 class="h2">Selected work</h2>
+    </div>
+    <div class="filters" role="group" aria-label="Filter work">
+      {filters.map((f, i) => (
+        <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>
+      ))}
+    </div>
+    <ul class="grid" id="work-grid">
+      {works.map((w) => (
+        <li data-cat={w.cat}>
+          <a href={w.href} class="card work" rel={w.href.startsWith('http') ? 'noopener' : undefined}>
+            <div class="thumb">
+              {w.image || w.youtubeId
+                ? <img src={w.image || yt(w.youtubeId!)} alt="" loading="lazy" width="480" height="360" />
+                : <span class="thumb__icon"><Icon name={icons[w.cat]} size={44} /></span>}
+              <span class="cat">{w.cat}</span>
+            </div>
+            <div class="body">
+              <p class="title">{w.title}</p>
+              <p class="muted sub">{w.sub}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 44px; }
+  .filters button { min-height: 44px; padding: 0 22px; border-radius: 999px; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .filters button[aria-pressed='true'] { background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg); }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .grid li[hidden] { display: none; }
+  .work { display: block; overflow: hidden; text-decoration: none; height: 100%; }
+  .work:hover { border-color: var(--accent); }
+  .cat { position: absolute; left: 16px; top: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: var(--btn-bg); color: var(--btn-fg); }
+  .body { padding: 22px 24px 26px; }
+  .title { margin: 0 0 4px; font-weight: 700; font-size: 20px; }
+  .sub { margin: 0; font-size: 15px; }
+  @media (max-width: 720px) {
+    .filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; margin: 0 -18px 24px; padding: 0 18px 4px; }
+    .filters button { flex: 0 0 auto; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .work { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 16px; }
+    .work .thumb { flex: 0 0 84px; height: 84px; aspect-ratio: auto; border-radius: 12px; }
+    .work .cat { display: none; }
+    .work .thumb__icon :global(svg) { width: 30px; height: 30px; }
+    .body { padding: 0; }
+    .title { font-size: 17px; }
+    .sub { font-size: 13px; }
+  }
+</style>
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+  const items = document.querySelectorAll<HTMLLIElement>('#work-grid li');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((li) => { li.hidden = f !== 'All' && li.dataset.cat !== f; });
+    });
+  });
+</script>

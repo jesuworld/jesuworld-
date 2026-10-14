@@ -1,0 +1,52 @@
+---
+import BookCover from './BookCover.astro';
+import { series, publishedBooks, availableBooks } from '../data/books';
+---
+<section id="books" class="section">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Books · English</p>
+        <h2 class="h2">{series.name} <span class="ta tamil" lang="ta">{series.nameTamil}</span></h2>
+        <p class="muted sub">{series.hook}{availableBooks.length > 0 && availableBooks.length < 5 ? ` · ${availableBooks.length} available now on Amazon` : ''}</p>
+      </div>
+      <a href="/books" class="btn btn--primary">Explore the series</a>
+    </div>
+
+    {publishedBooks.length > 0 ? (
+      <ul class="shelf">
+        {publishedBooks.map((b) => (
+          <li>
+            <a href={`/books#book-${b.number}`} class="item">
+              <BookCover book={b} />
+              <span class="num">Book {b.number}{b.comingSoon && ' · Coming soon'}</span>
+              <span class="title">{b.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="card empty">
+        <p class="muted">Available on Amazon under the name {series.author}.</p>
+        <a href={series.amazonAuthor} class="btn btn--ghost" rel="noopener">See them on Amazon ↗</a>
+      </div>
+    )}
+  </div>
+</section>
+<style>
+  .tamil { font-weight: 600; font-size: 0.55em; color: var(--muted); margin-left: 8px; white-space: nowrap; }
+  .sub { margin: 10px 0 0; }
+  .shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; }
+  .item { display: flex; flex-direction: column; text-decoration: none; }
+  .num { margin-top: 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+  .title { font-weight: 700; font-size: 17px; line-height: 1.35; }
+  .item:hover .title { color: var(--accent-text); }
+  .empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 32px; border-left: 4px solid var(--accent); }
+  .empty p { margin: 0; }
+  @media (max-width: 900px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 720px) {
+    .shelf { display: flex; overflow-x: auto; gap: 14px; margin: 0 -18px; padding: 0 18px 8px; scroll-snap-type: x mandatory; }
+    .shelf li { flex: 0 0 42%; scroll-snap-align: start; }
+    .empty { padding: 22px; }
+  }
+</style>

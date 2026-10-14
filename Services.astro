@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+import { services } from '../data/site';
+---
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">What I do</p>
+      <h2 class="h2">Six ways I create and serve</h2>
+    </div>
+    <div class="grid">
+      {services.map((s) => (
+        <div class="card item">
+          <span class="icon-tile"><Icon name={s.icon} /></span>
+          <h3>{s.title}</h3>
+          <p class="muted">{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .item { padding: 32px; }
+  h3 { margin: 22px 0 8px; font-weight: 700; font-size: 21px; }
+  p { margin: 0; }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; gap: 0; }
+    .item { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; padding: 16px 0; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+    .item :global(.icon-tile) { width: 44px; height: 44px; grid-row: span 2; }
+    h3 { margin: 0; font-size: 17px; }
+    p { font-size: 14px; }
+  }
+</style>

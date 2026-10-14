@@ -1,0 +1,93 @@
+---
+import Icon from './Icon.astro';
+const nav = [
+  { href: '/#about', label: 'About' },
+  { href: '/#services', label: 'What I do' },
+  { href: '/#resume', label: 'Resume' },
+  { href: '/books', label: 'Books' },
+  { href: '/#films', label: 'Films' },
+  { href: '/#portfolio', label: 'Portfolio' },
+  { href: '/writings', label: 'Writings' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="logo">
+      <span class="logo__mark">JS</span>
+      <span>Jesu<span class="logo__dot">.</span></span>
+    </a>
+    <nav aria-label="Main" class="nav" id="site-nav">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <div class="actions">
+      <button type="button" class="round" id="theme-toggle" aria-label="Switch to light mode">
+        <span class="icon-sun"><Icon name="sun" size={18} /></span>
+        <span class="icon-moon"><Icon name="moon" size={18} /></span>
+      </button>
+      <button type="button" class="round round--solid menu-btn" id="menu-toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="icon-open"><Icon name="menu" size={20} /></span>
+        <span class="icon-close"><Icon name="close" size={20} /></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { border-bottom: 1px solid var(--line); position: relative; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
+  .logo__mark { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--accent-text); }
+  .logo__dot { color: var(--accent-text); }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px 26px; font-size: 15px; font-weight: 600; }
+  .nav a { text-decoration: none; padding: 10px 0; }
+  .nav a:hover { color: var(--accent-text); }
+  .actions { display: flex; gap: 8px; }
+  .round { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .round--solid { background: var(--btn-bg); color: var(--btn-fg); border: 0; }
+  .menu-btn { display: none; }
+  .round > span { display: inline-flex; }
+  .round > .icon-moon, .round > .icon-close { display: none; }
+  :global([data-theme='light']) .round > .icon-sun { display: none; }
+  :global([data-theme='light']) .round > .icon-moon { display: inline-flex; }
+
+  @media (max-width: 900px) {
+    .menu-btn { display: flex; }
+    .nav {
+      display: none; position: absolute; left: 0; right: 0; top: 100%; z-index: 5;
+      flex-direction: column; gap: 0; padding: 8px 18px 20px;
+      background: var(--surface); border-bottom: 1px solid var(--line);
+    }
+    .nav a { display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 700; border-bottom: 1px solid var(--line); }
+    .nav a:last-child { border-bottom: 0; }
+    .site-header.open .nav { display: flex; }
+    .site-header.open .round > .icon-open { display: none; }
+    .site-header.open .round > .icon-close { display: inline-flex; }
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle')!;
+  const setLabel = () => {
+    themeBtn.setAttribute('aria-label', root.dataset.theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+  };
+  setLabel();
+  themeBtn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    setLabel();
+  });
+
+  const header = document.querySelector('.site-header')!;
+  const menuBtn = document.getElementById('menu-toggle')!;
+  const setMenu = (open: boolean) => {
+    header.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  menuBtn.addEventListener('click', () => setMenu(!header.classList.contains('open')));
+  document.querySelectorAll('#site-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+</script>

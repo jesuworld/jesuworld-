@@ -1,0 +1,40 @@
+---
+import Timeline from './Timeline.astro';
+import { professional, community, skills, site, socials } from '../data/site';
+const linkedin = socials.find((s) => s.label === 'LinkedIn')?.href;
+---
+<section id="resume" class="section section--alt">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">Resume</p>
+        <h2 class="h2">Experience &amp; service</h2>
+      </div>
+      {site.cvUrl && <a href={site.cvUrl} class="btn btn--primary" download>Download full CV</a>}
+    </div>
+    <div class="cols">
+      <div>
+        <Timeline heading="Professional" items={professional} />
+        {linkedin && <a class="text-link more" href={linkedin} rel="noopener">Full profile on LinkedIn ↗</a>}
+      </div>
+      <Timeline heading="Community &amp; creative" items={community} />
+    </div>
+    <div class="skills">
+      <h3>Skills</h3>
+      <ul>
+        {skills.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+<style>
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 48px; }
+  .more { display: inline-block; margin-top: 24px; }
+  .skills { margin-top: 56px; }
+  h3 { margin: 0 0 16px; font-weight: 700; font-size: 22px; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  li { font-size: 15px; font-weight: 600; padding: 9px 18px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+  @media (max-width: 720px) {
+    .cols { grid-template-columns: 1fr; gap: 36px; }
+  }
+</style>

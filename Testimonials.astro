@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { testimonials } from '../data/site';
+---
+{testimonials.length > 0 && (
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Testimonials</p>
+        <h2 class="h2">Kind words</h2>
+      </div>
+      <div class="grid">
+        {testimonials.map((t) => (
+          <figure class="quote">
+            <span class="mark"><Icon name="quote" size={32} /></span>
+            <blockquote>{t.quote}</blockquote>
+            <figcaption><strong>{t.name}</strong><span class="muted">{t.role}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .quote { margin: 0; padding: 32px; border-radius: 20px; background: var(--bg); border: 1px solid var(--line); }
+  .mark { color: var(--accent); }
+  blockquote { margin: 16px 0 24px; font-size: 18px; line-height: 1.6; }
+  figcaption strong { display: block; }
+  figcaption span { font-size: 14px; }
+</style>

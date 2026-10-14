@@ -1,0 +1,103 @@
+/* ── Tokens ─────────────────────────────────────────── */
+:root,
+:root[data-theme='dark'] {
+  --bg: #0b1424;
+  --surface: #101c30;
+  --surface-2: #18294a;
+  --line: #22344f;
+  --text: #f3f5f8;
+  --muted: #a9b4c4;
+  --accent: #d9b24c;
+  --accent-text: #e3be5c;
+  --btn-bg: #d9b24c;
+  --btn-fg: #0b1424;
+  --icon-bg: rgba(217, 178, 76, 0.12);
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --surface: #f4f6f9;
+  --surface-2: #e4e9f0;
+  --line: #dce1e8;
+  --text: #0f1b2d;
+  --muted: #556070;
+  --accent: #c9a227;
+  --accent-text: #7a5c0c;
+  --btn-bg: #0f2a4a;
+  --btn-fg: #ffffff;
+  --icon-bg: rgba(201, 162, 39, 0.14);
+  color-scheme: light;
+}
+
+
+/* ── Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Tamil', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.ta { font-family: 'Noto Sans Tamil', sans-serif; }
+.ta-serif { font-family: 'Noto Serif Tamil', serif; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; left: 16px; top: -60px; padding: 10px 16px; border-radius: 8px; background: var(--btn-bg); color: var(--btn-fg); font-weight: 700; z-index: 10; }
+.skip-link:focus { top: 16px; }
+
+/* ── Layout ─────────────────────────────────────────── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.section { padding: 104px 0; }
+.section--alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.section-head { margin-bottom: 48px; }
+.section-head--center { text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
+.section-head--split { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px; }
+.eyebrow { margin: 0 0 8px; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+.h2 { margin: 0; font-weight: 800; font-size: clamp(30px, 4vw, 44px); line-height: 1.15; letter-spacing: -0.01em; }
+.muted { color: var(--muted); }
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .container { padding: 0 18px; }
+  .section { padding: 56px 0; }
+  .section-head { margin-bottom: 28px; }
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 28px; border-radius: 999px;
+  font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+  border: 1.5px solid transparent;
+}
+.btn--primary { background: var(--btn-bg); color: var(--btn-fg); }
+.btn--primary:hover { filter: brightness(1.06); }
+.btn--ghost { border-color: var(--text); color: var(--text); background: transparent; }
+.btn--ghost:hover { background: var(--surface); }
+.chip {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+  border-radius: 999px; background: var(--surface); border: 1px solid var(--line);
+  text-decoration: none; font-size: 14px; font-weight: 600;
+}
+.chip:hover { border-color: var(--accent); }
+.text-link { font-weight: 700; color: var(--accent-text); text-underline-offset: 4px; }
+
+/* ── Cards ──────────────────────────────────────────── */
+.card { border-radius: 20px; background: var(--surface); border: 1px solid var(--line); }
+.icon-tile {
+  width: 56px; height: 56px; border-radius: 14px; background: var(--icon-bg); color: var(--accent-text);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.thumb { aspect-ratio: 4 / 3; background: var(--surface-2); position: relative; overflow: hidden; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb__icon {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: var(--accent-text); opacity: 0.7;
+}
