@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-//  The "Chumma Iru" book series — powers /books and the home page.
+//  The "Chumma Iru" book series. Powers /books and the home page.
 //
 //  To add a book: fill in its entry below. A book appears on the site
 //  only once it has a `title` AND at least one Amazon link, so empty
@@ -47,7 +47,7 @@ export const series = {
   // Shown in "About the author" on /books (third person, from the Amazon author profile).
   authorBio: [
     'Jesu S Augustine is a writer and technology leader whose work brings together technology, philosophy, literature, history, science, and spirituality. With master’s degrees in both the arts and the sciences, he writes with a lifelong curiosity about how people understand the world and themselves.',
-    'His nonfiction explores where ancient wisdom meets modern life. The Art of Chumma Iru series draws on the Tamil invitation “Chumma Iru,” meaning “Just Be,” to offer gentle, practical paths toward inner peace — five books that move from stillness to becoming.',
+    'His nonfiction explores where ancient wisdom meets modern life. The Art of Chumma Iru series draws on the Tamil invitation “Chumma Iru,” meaning “Just Be,” to offer gentle, practical paths toward inner peace, in five books that move from stillness to becoming.',
     'His broader writing includes reflective nonfiction and novels inspired by mythology, history, and human psychology, written for readers who stay curious about the inner life and the questions that resist easy answers.',
   ],
   amazonAuthor: 'https://www.amazon.com/stores/Jesu-S-Augustine/author/B0HLZ3NYWH/allbooks',

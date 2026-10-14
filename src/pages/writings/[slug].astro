@@ -13,7 +13,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const date = post.data.date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
-<Base title={`${post.data.title} — Jesu Sundaramaran`} description={post.data.summary}>
+<Base title={`${post.data.title} | Jesu Sundaramaran`} description={post.data.summary}>
   <Header />
   <main id="main" class="section">
     <article class="container article" lang={post.data.lang}>

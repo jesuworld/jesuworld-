@@ -15,7 +15,7 @@ const yt = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
     <article class="feature">
       <div class="feature__media">
-        <img src={f.image || yt(f.youtubeId)} alt={`${f.title} — still`} loading="lazy" width="480" height="360" />
+        <img src={f.image || yt(f.youtubeId)} alt={`${f.title} still`} loading="lazy" width="480" height="360" />
       </div>
       <div class="feature__body">
         <span class="badge">{f.badge}</span>

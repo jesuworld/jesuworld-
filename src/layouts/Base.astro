@@ -6,7 +6,7 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title = `${site.name} — Technology Leader, Writer, Orator, Filmmaker`, description = site.description } = Astro.props;
+const { title = `${site.name} | Technology Leader, Writer, Orator, Filmmaker`, description = site.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/images/og.jpg', Astro.site);
 ---

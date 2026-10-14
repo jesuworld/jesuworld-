@@ -8,9 +8,9 @@ export const site = {
   nameTamil: 'ஜேசு சுந்தரமாறன்',
   roles: ['Technology Leader', 'Writer', 'Orator', 'Filmmaker'],
   intro:
-    'Technology leader with 20+ years in IT, based in the San Francisco Bay Area — and author of The Art of Chumma Iru. Beyond work, I champion Tamil language and culture through writing, the pattimanram stage, film and community service.',
+    'Technology leader with 20+ years in IT, based in the San Francisco Bay Area, and author of The Art of Chumma Iru. Beyond work, I champion Tamil language and culture through writing, the pattimanram stage, film and community service.',
   description:
-    'Jesu Sundaramaran — technology leader, Tamil writer, pattimanram orator and film producer based in the San Francisco Bay Area.',
+    'Jesu Sundaramaran: technology leader, author, Tamil writer, pattimanram orator and film producer based in the San Francisco Bay Area.',
   email: 'jesuworld@gmail.com',
   // Optional: a Formspree (or similar) endpoint, e.g. https://formspree.io/f/abcdwxyz
   // Leave empty to show an email button instead of the form.
@@ -39,8 +39,8 @@ export const about = {
   heading: 'Software is my profession. Tamil is my calling.',
   paragraphs: [
     'By profession, I am a technology leader with more than 20 years in IT. By calling, I am a writer, filmmaker and Tamil orator, drawn to the places where technology, philosophy, literature, history, science and spirituality meet. With master’s degrees in both the arts and the sciences, I write from a lifelong curiosity about how people understand the world and themselves.',
-    'Born near Chennai and raised across many towns of Tamil Nadu, I found my voice on school and college stages. In the United States, that love for Tamil became nearly a decade of service — organizing literary events, coaching young Tamil speakers, founding Nakeerar Pattimanra Kuzhu, and producing films through J Studios.',
-    'My nonfiction explores where ancient wisdom meets modern life. The Art of Chumma Iru, a five-book series in English, draws on the Tamil invitation “Chumma Iru” — “Just Be” — to offer gentle, practical paths toward inner peace, from stillness to becoming. Beyond it, I write reflective nonfiction and novels inspired by mythology, history and human psychology.',
+    'Born near Chennai and raised across many towns of Tamil Nadu, I found my voice on school and college stages. In the United States, that love for Tamil became nearly a decade of service: organizing literary events, coaching young Tamil speakers, founding Nakeerar Pattimanra Kuzhu, and producing films through J Studios.',
+    'My nonfiction explores where ancient wisdom meets modern life. The Art of Chumma Iru, a five-book series in English, draws on the Tamil invitation “Chumma Iru,” meaning “Just Be,” to offer gentle, practical paths toward inner peace, from stillness to becoming. Beyond it, I write reflective nonfiction and novels inspired by mythology, history and human psychology.',
   ],
   cta: { label: 'Explore The Art of Chumma Iru', href: '/books' },
   facts: [
@@ -83,7 +83,7 @@ export const featuredFilm = {
   titleTamil: 'காயல்',
   badge: 'Feature film · Producer',
   youtubeId: 'DMfq81qwEvg',
-  // Optional: '/images/kaayal.jpg' — put key art in public/images to replace the YouTube thumbnail.
+  // Optional: '/images/kaayal.jpg'. Put key art in public/images to replace the YouTube thumbnail.
   image: '',
   credits: [
     { label: 'Produced by', value: 'Jesu Sundaramaran · J Studios' },
