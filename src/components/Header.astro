@@ -2,13 +2,10 @@
 import Icon from './Icon.astro';
 const nav = [
   { href: '/#about', label: 'About' },
-  { href: '/#services', label: 'What I do' },
-  { href: '/#resume', label: 'Resume' },
   { href: '/books', label: 'Books' },
   { href: '/#films', label: 'Films' },
-  { href: '/#portfolio', label: 'Portfolio' },
   { href: '/writings', label: 'Writings' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/#contact', label: 'Contact', cta: true },
 ];
 ---
 <header class="site-header">
@@ -18,7 +15,7 @@ const nav = [
       <span>Jesu<span class="logo__dot">.</span></span>
     </a>
     <nav aria-label="Main" class="nav" id="site-nav">
-      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      {nav.map((item) => <a href={item.href} class:list={[{ cta: item.cta }]}>{item.label}</a>)}
     </nav>
     <div class="actions">
       <button type="button" class="round" id="theme-toggle" aria-label="Switch to light mode">
@@ -39,9 +36,11 @@ const nav = [
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
   .logo__mark { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--accent-text); }
   .logo__dot { color: var(--accent-text); }
-  .nav { display: flex; flex-wrap: wrap; gap: 4px 26px; font-size: 15px; font-weight: 600; }
+  .nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 30px; font-size: 15px; font-weight: 600; }
   .nav a { text-decoration: none; padding: 10px 0; }
   .nav a:hover { color: var(--accent-text); }
+  .nav a.cta { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: var(--btn-bg); color: var(--btn-fg); }
+  .nav a.cta:hover { filter: brightness(1.06); color: var(--btn-fg); }
   .actions { display: flex; gap: 8px; }
   .round { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; }
   .round--solid { background: var(--btn-bg); color: var(--btn-fg); border: 0; }
@@ -55,11 +54,12 @@ const nav = [
     .menu-btn { display: flex; }
     .nav {
       display: none; position: absolute; left: 0; right: 0; top: 100%; z-index: 5;
-      flex-direction: column; gap: 0; padding: 8px 18px 20px;
+      flex-direction: column; align-items: stretch; gap: 0; padding: 8px 18px 20px;
       background: var(--surface); border-bottom: 1px solid var(--line);
     }
     .nav a { display: flex; align-items: center; min-height: 52px; font-size: 18px; font-weight: 700; border-bottom: 1px solid var(--line); }
     .nav a:last-child { border-bottom: 0; }
+    .nav a.cta { margin-top: 12px; justify-content: center; min-height: 52px; padding: 0; }
     .site-header.open .nav { display: flex; }
     .site-header.open .round > .icon-open { display: none; }
     .site-header.open .round > .icon-close { display: inline-flex; }

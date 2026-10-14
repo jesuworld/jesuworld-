@@ -109,16 +109,25 @@ const jsonLd = {
       </section>
     )}
 
-    <section class="section section--alt closing">
-      <div class="container closing__inner">
+    <section class="section section--alt author" id="author">
+      <div class="container author__inner">
+        <img
+          src="/images/portrait-warm-640.jpg"
+          width="640" height="800" loading="lazy"
+          alt={`Portrait of ${series.author}`}
+          class="author__photo"
+        />
         <div>
-          <h2 class="h2">More from Jesu</h2>
-          <p class="muted">Tamil short stories and poems, pattimanram talks and films.</p>
-        </div>
-        <div class="closing__links">
-          <a href="/writings" class="btn btn--ghost">Tamil writings</a>
-          <a href="/#films" class="btn btn--ghost">Films</a>
-          <a href="/" class="btn btn--primary">Home</a>
+          <p class="eyebrow">About the author</p>
+          <h2 class="about__title">{series.author}</h2>
+          <div class="prose author__bio">
+            {series.authorBio.map((p) => <p>{p}</p>)}
+          </div>
+          <div class="closing__links">
+            <a href={series.amazonAuthor} class="btn btn--primary" rel="noopener">Amazon author page ↗</a>
+            <a href="/#about" class="btn btn--ghost">More about Jesu</a>
+            <a href="/writings" class="btn btn--ghost">Tamil writings</a>
+          </div>
         </div>
       </div>
     </section>
@@ -175,9 +184,10 @@ const jsonLd = {
   .waiting .btn { margin-top: 16px; }
   .big { font-weight: 800; font-size: 26px; }
 
-  .closing__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
-  .closing p { margin: 8px 0 0; }
-  .closing__links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .author__inner { display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .author__photo { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px; border: 1px solid var(--line); }
+  .author__bio { margin-top: 18px; max-width: 680px; }
+  .closing__links { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
 
   @media (max-width: 720px) {
     .intro__inner { padding-top: 40px; padding-bottom: 48px; gap: 36px; flex-direction: column-reverse; align-items: stretch; }
@@ -190,6 +200,9 @@ const jsonLd = {
     .prose { font-size: 16px; }
     .book-hook { font-size: 19px; }
     .about__inner { grid-template-columns: 1fr; gap: 20px; }
+    .author__inner { grid-template-columns: 1fr; gap: 24px; }
+    .author__photo { max-width: 240px; }
+    .closing__links { flex-direction: column; }
     .buy { flex-direction: column; }
     .waiting { padding: 24px; }
   }

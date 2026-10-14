@@ -44,6 +44,12 @@ export const series = {
 </ul>
 <p>Every book weaves together stories from Tamil and world traditions, examples from everyday life, hands-on practices, reflection questions, and a seven-day guide. Each can be read on its own, or in order as a complete journey from stillness to becoming.</p>`,
   author: 'Jesu S. Augustine',
+  // Shown in "About the author" on /books (third person, from the Amazon author profile).
+  authorBio: [
+    'Jesu S Augustine is a writer and technology leader whose work brings together technology, philosophy, literature, history, science, and spirituality. With master’s degrees in both the arts and the sciences, he writes with a lifelong curiosity about how people understand the world and themselves.',
+    'His nonfiction explores where ancient wisdom meets modern life. The Art of Chumma Iru series draws on the Tamil invitation “Chumma Iru,” meaning “Just Be,” to offer gentle, practical paths toward inner peace — five books that move from stillness to becoming.',
+    'His broader writing includes reflective nonfiction and novels inspired by mythology, history, and human psychology, written for readers who stay curious about the inner life and the questions that resist easy answers.',
+  ],
   amazonAuthor: 'https://www.amazon.com/stores/Jesu-S-Augustine/author/B0HLZ3NYWH/allbooks',
 };
 
