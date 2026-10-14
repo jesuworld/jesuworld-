@@ -50,7 +50,7 @@ export const about = {
 
 export const services = [
   { icon: 'monitor', title: 'Technology leadership', text: '20+ years delivering IT transformation in payments and healthcare.' },
-  { icon: 'pen', title: 'Writing', text: 'Tamil short stories and poems; English writing coming soon.' },
+  { icon: 'pen', title: 'Writing', text: 'Tamil short stories and poems; English books on Amazon.' },
   { icon: 'mic', title: 'Oratory & pattimanram', text: 'Debater, judge and founder of Nakeerar Pattimanra Kuzhu.' },
   { icon: 'film', title: 'Filmmaking', text: 'Producer of the feature film Kaayal; writer-director of Idaiveli.' },
   { icon: 'people', title: 'Community leadership', text: 'FeTNA, Sacramento and Bay Area Tamil associations, relief work.' },
@@ -101,7 +101,7 @@ export const films: { title: string; titleTamil?: string; role: string; text: st
   { title: 'Kumari Kandam & Marina Puratchi', role: 'Documentaries', text: 'Director-producer of Kumari Kandam; worldwide release of Marina Puratchi.', href: 'https://www.thejstudios.com' },
 ];
 
-export type WorkCategory = 'Writing' | 'Pattimanram' | 'Film' | 'Community';
+export type WorkCategory = 'Books' | 'Writing' | 'Pattimanram' | 'Film' | 'Community';
 
 export const works: { cat: WorkCategory; title: string; sub: string; href: string; youtubeId?: string; image?: string }[] = [
   { cat: 'Film', title: 'Kaayal', sub: 'Feature film · Producer', href: 'https://www.youtube.com/watch?v=DMfq81qwEvg', youtubeId: 'DMfq81qwEvg' },
@@ -122,6 +122,7 @@ export const works: { cat: WorkCategory; title: string; sub: string; href: strin
 export const testimonials: { quote: string; name: string; role: string }[] = [];
 
 export const links = {
+  amazonAuthor: 'https://www.amazon.com/stores/Jesu-S-Augustine/author/B0HLZ3NYWH/allbooks',
   writings: 'https://myezhuthu.link',
   pattimanram: 'https://thenpk.org',
   studios: 'https://www.thejstudios.com',

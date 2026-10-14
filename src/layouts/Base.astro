@@ -32,6 +32,7 @@ const ogImage = new URL('/images/og.jpg', Astro.site);
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Tamil:wght@400;600&display=swap"
     />
+    <slot name="head" />
     <!-- Apply the saved theme before paint to avoid a flash -->
     <script is:inline>
       (function () {
